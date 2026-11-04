@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MD to PDF — Markdown Converter</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root{--bg:#f4f6fb;--panel:#fff;--ink:#172033;--muted:#718096;--line:#e5e9f1;--accent:#6257e8;--accent2:#8178ff;--soft:#f0efff;--shadow:0 12px 36px rgba(35,42,70,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}
+button,input,select{font:inherit}.app{min-height:100vh}.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,4vw,58px);position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.5px}.logo{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#766cf5,#5145d8);display:grid;place-items:center;color:white;font-size:15px;font-weight:900;box-shadow:0 5px 12px #6257e844}.brand small{display:block;color:var(--muted);font-size:10px;font-weight:600;letter-spacing:1.4px;margin-top:2px}
+.top-right{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px}.secure{display:flex;align-items:center;gap:6px}.dot{width:7px;height:7px;background:#26b987;border-radius:50%}
+main{max-width:1440px;margin:auto;padding:38px clamp(16px,4vw,56px) 60px}.intro{display:flex;justify-content:space-between;align-items:end;margin-bottom:27px;gap:20px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:1.8px;color:var(--accent);text-transform:uppercase;margin-bottom:9px}.intro h1{font-size:clamp(26px,3vw,36px);letter-spacing:-1.4px;margin:0 0 9px}.intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}.version{font-size:11px;color:#8b94a7;background:#fff;border:1px solid var(--line);padding:8px 12px;border-radius:30px;white-space:nowrap}
+.workspace{display:grid;grid-template-columns:minmax(300px,.82fr) minmax(420px,1.18fr);gap:20px;align-items:start}.panel{background:var(--panel);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow);overflow:hidden}.panel-head{padding:19px 21px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.panel-title{font-size:14px;font-weight:800;display:flex;align-items:center;gap:9px}.step{width:23px;height:23px;border-radius:7px;background:var(--soft);color:var(--accent);display:grid;place-items:center;font-size:11px;font-weight:800}.panel-sub{font-size:11px;color:var(--muted)}
+.left-body{padding:20px}.dropzone{border:1.5px dashed #c9c6f8;background:#fafaff;border-radius:13px;min-height:166px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;transition:.2s;cursor:pointer}.dropzone.drag{background:#f0efff;border-color:var(--accent);transform:scale(1.01)}.upload-icon{width:43px;height:43px;border-radius:13px;background:#eeedff;color:var(--accent);display:grid;place-items:center;margin-bottom:11px}.dropzone strong{font-size:13px}.dropzone p{font-size:11px;color:var(--muted);margin:7px 0 12px}.browse{border:0;background:var(--accent);color:#fff;border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer}.file-info{display:none;align-items:center;gap:10px;padding:12px;margin-top:12px;border:1px solid var(--line);border-radius:10px}.file-icon{width:34px;height:34px;border-radius:8px;background:#fff0e8;color:#d97732;display:grid;place-items:center;font-weight:800;font-size:11px}.file-meta{min-width:0;flex:1}.file-meta strong{display:block;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.file-meta span{font-size:10px;color:var(--muted)}.remove{border:0;background:transparent;color:#9aa2b2;font-size:19px;cursor:pointer}
+.or{display:flex;align-items:center;gap:12px;color:#a0a8b8;font-size:10px;margin:17px 0}.or:before,.or:after{content:"";height:1px;background:var(--line);flex:1}
+.field{margin-top:17px}.field label{display:block;font-size:11px;font-weight:750;margin-bottom:8px;color:#465168}.field input,.field select{width:100%;height:39px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:0 11px;color:var(--ink);font-size:12px;outline:none}.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px #6257e817}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.range-line{display:flex;align-items:center;gap:10px}.range-line input{padding:0;accent-color:var(--accent);height:auto}.range-value{font-size:11px;color:var(--accent);font-weight:800;min-width:38px;text-align:right}
+.action-row{display:flex;gap:9px;margin-top:22px}.primary{flex:1;border:0;background:linear-gradient(135deg,var(--accent2),#5549d9);color:white;border-radius:9px;height:44px;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 6px 14px #6257e82e;transition:.2s}.primary:hover{transform:translateY(-1px);box-shadow:0 9px 18px #6257e83d}.primary:disabled{opacity:.45;cursor:not-allowed;transform:none}.secondary{border:1px solid var(--line);background:white;border-radius:9px;padding:0 14px;font-size:11px;font-weight:700;color:#59647a;cursor:pointer}
+.hint{font-size:10px;color:#98a1b1;line-height:1.6;margin:12px 1px 0}
+.preview-panel{min-height:650px}.preview-tools{display:flex;align-items:center;gap:8px}.pill{font-size:10px;color:#68738a;background:#f5f6fa;padding:6px 9px;border-radius:20px}.preview-wrap{background:#eef0f6;padding:24px;min-height:590px;display:flex;justify-content:center;align-items:flex-start;overflow:auto}.paper{background:#fff;width:100%;max-width:595px;min-height:760px;padding:58px 54px;box-shadow:0 5px 22px #25304a12;color:#252b38;overflow-wrap:anywhere}.empty{min-height:500px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#9aa3b3}.empty-icon{font-size:35px;margin-bottom:13px;opacity:.7}.empty strong{font-size:13px;color:#657086}.empty p{font-size:11px;line-height:1.7;max-width:230px}
+#document{font-size:14px;line-height:1.8;font-family:Arial,"Noto Sans KR",sans-serif}#document h1,#document h2,#document h3{color:#172033;line-height:1.35;letter-spacing:-.5px;margin:1.35em 0 .55em}#document h1{font-size:2em;border-bottom:1px solid #e8eaf0;padding-bottom:.45em;margin-top:0}#document h2{font-size:1.5em;border-bottom:1px solid #edf0f5;padding-bottom:.35em}#document h3{font-size:1.2em}#document p{margin:.7em 0}#document a{color:#5549d9;text-decoration:none}#document blockquote{border-left:3px solid #8178ff;margin:1em 0;padding:2px 0 2px 15px;color:#68738a}#document ul,#document ol{padding-left:1.5em}#document li{margin:.25em 0}#document code{background:#f2f3f7;border-radius:4px;padding:2px 5px;font-size:.88em}#document pre{background:#f5f6fa;border-radius:8px;padding:13px;white-space:pre-wrap;word-break:break-word}#document pre code{background:none;padding:0}#document table{border-collapse:collapse;width:100%;font-size:.9em;margin:1em 0}#document th,#document td{border:1px solid #e2e6ed;padding:7px 9px;text-align:left}#document th{background:#f5f6fa}#document img{max-width:100%;height:auto}#document hr{border:0;border-top:1px solid #e5e9f0;margin:1.5em 0}#document input[type=checkbox]{accent-color:#6257e8}
+.footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;color:#9aa3b3;font-size:10px}.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;background:#20283a;color:#fff;padding:11px 17px;border-radius:9px;font-size:12px;box-shadow:0 8px 24px #0002;transition:.25s;pointer-events:none;z-index:10}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:900px){.workspace{grid-template-columns:1fr}.preview-panel{min-height:500px}.preview-wrap{min-height:520px}.paper{max-width:595px}.intro{align-items:start;flex-direction:column}.version{display:none}}
+@media(max-width:560px){.topbar{height:62px}.top-right .secure{display:none}main{padding-top:25px}.intro h1{font-size:27px}.left-body{padding:15px}.panel-head{padding:16px}.preview-wrap{padding:12px;min-height:450px}.paper{padding:35px 25px;min-height:600px}.two{gap:8px}.action-row{flex-direction:column}.secondary{height:40px}.footer{font-size:9px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand"><div class="logo">M↓</div><div>MD to PDF<small>MARKDOWN CONVERTER</small></div></div>
+  <div class="top-right"><span class="secure"><i class="dot"></i> 파일은 브라우저에서 안전하게 처리됩니다</span></div>
+</header>
+<main>
+  <section class="intro">
+    <div><div class="eyebrow">Simple · Fast · Private</div><h1>Markdown을 PDF로 변환하세요.</h1><p>마크다운 문서를 업로드하고 원하는 설정으로 깔끔한 PDF를 만들어 보세요.</p></div>
+    <div class="version">FREE ONLINE TOOL&nbsp; · &nbsp;v1.0</div>
+  </section>
+  <section class="workspace">
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title"><span class="step">01</span> 문서 업로드</div><span class="panel-sub">.md / .markdown</span></div>
+      <div class="left-body">
+        <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="마크다운 파일 업로드">
+          <div class="upload-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16V4m-5 5 5-5 5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg></div>
+          <strong>파일을 여기에 끌어다 놓으세요</strong><p>또는 아래 버튼을 눌러 파일을 선택하세요</p><button class="browse" type="button">파일 찾아보기</button>
+        </div>
+        <input id="fileInput" type="file" accept=".md,.markdown,text/markdown,text/plain" hidden>
+        <div class="file-info" id="fileInfo"><div class="file-icon">MD</div><div class="file-meta"><strong id="fileName">document.md</strong><span id="fileSize">0 KB</span></div><button class="remove" id="removeFile" aria-label="파일 제거">×</button></div>
+        <div class="or">또는 직접 입력</div>
+        <div class="field"><label for="rawText">마크다운 내용</label><textarea id="rawText" placeholder="# 문서 제목&#10;&#10;여기에 마크다운 내용을 입력하거나 붙여넣으세요.&#10;&#10;- 첫 번째 항목&#10;- 두 번째 항목" style="width:100%;min-height:116px;border:1px solid var(--line);border-radius:8px;padding:11px;font:12px/1.6 inherit;resize:vertical;outline:none"></textarea></div>
+        <div class="field"><label for="pdfName">PDF 파일명</label><input id="pdfName" type="text" value="my-document" placeholder="파일명을 입력하세요"></div>
+        <div class="field two">
+          <div><label for="paperSize">용지 크기</label><select id="paperSize"><option value="a4">A4</option><option value="letter">Letter</option><option value="a5">A5</option></select></div>
+          <div><label for="orientation">방향</label><select id="orientation"><option value="portrait">세로</option><option value="landscape">가로</option></select></div>
+        </div>
+        <div class="field"><label for="fontSize">본문 글자 크기</label><div class="range-line"><input id="fontSize" type="range" min="10" max="20" value="14"><span class="range-value" id="fontValue">14px</span></div></div>
+        <div class="field"><label for="margin">페이지 여백</label><div class="range-line"><input id="margin" type="range" min="8" max="30" value="18"><span class="range-value" id="marginValue">18mm</span></div></div>
+        <div class="action-row"><button class="primary" id="downloadBtn" disabled>↓&nbsp; PDF 다운로드</button><button class="secondary" id="sampleBtn">예시 문서</button></div>
+        <p class="hint">※ PDF 변환 시 인터넷 연결이 필요합니다. 변환 라이브러리를 CDN에서 불러오며, 업로드한 문서 내용은 별도 서버로 전송하지 않습니다.</p>
+      </div>
+    </div>
+    <div class="panel preview-panel">
+      <div class="panel-head"><div class="panel-title"><span class="step">02</span> 문서 미리보기</div><div class="preview-tools"><span class="pill" id="previewStatus">대기 중</span><span class="pill" id="pageLabel">A4 · 세로</span></div></div>
+      <div class="preview-wrap"><div class="paper"><div id="document"><div class="empty"><div class="empty-icon">▤</div><strong>아직 문서가 없습니다</strong><p>왼쪽에서 마크다운 파일을 업로드하거나 내용을 입력하면 이곳에 미리보기가 표시됩니다.</p></div></div></div></div>
+    </div>
+  </section>
+  <div class="footer"><span>MD to PDF Converter</span><span>간편한 문서 변환, 깔끔한 결과물</span></div>
+</main>
+<div class="toast" id="toast"></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+let currentText='', currentFile=null, toastTimer;
+marked.setOptions({gfm:true,breaks:false});
+function notify(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2600)}
+function formatSize(n){return n<1024? n+' B':n<1048576?(n/1024).toFixed(1)+' KB':(n/1048576).toFixed(2)+' MB'}
+function updatePreview(text){
+ currentText=text;const doc=$('document');
+ if(!text.trim()){doc.innerHTML='<div class="empty"><div class="empty-icon">▤</div><strong>아직 문서가 없습니다</strong><p>마크다운 파일을 업로드하거나 내용을 입력하면 이곳에 미리보기가 표시됩니다.</p></div>';$('downloadBtn').disabled=true;$('previewStatus').textContent='대기 중';return}
+ doc.innerHTML=marked.parse(text);doc.style.fontSize=$('fontSize').value+'px';$('downloadBtn').disabled=false;$('previewStatus').textContent='미리보기 준비 완료';
+}
+function loadFile(file){
+ if(!file)return;
+ if(!/\.(md|markdown)$/i.test(file.name)){notify('MD 또는 Markdown 파일만 업로드할 수 있습니다.');return}
+ const reader=new FileReader();
+ reader.onload=()=>{currentFile=file;$('rawText').value=reader.result;$('fileName').textContent=file.name;$('fileSize').textContent=formatSize(file.size);$('fileInfo').style.display='flex';$('pdfName').value=file.name.replace(/\.(md|markdown)$/i,'');updatePreview(String(reader.result));notify('파일을 불러왔습니다.')};
+ reader.onerror=()=>notify('파일을 읽지 못했습니다.');reader.readAsText(file,'UTF-8');
+}
+$('dropzone').addEventListener('click',e=>{if(e.target.tagName!=='BUTTON')$('fileInput').click()});
+$('dropzone').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')$('fileInput').click()});
+$('fileInput').addEventListener('change',e=>loadFile(e.target.files[0]));
+['dragenter','dragover'].forEach(ev=>$('dropzone').addEventListener(ev,e=>{e.preventDefault();$('dropzone').classList.add('drag')}));
+['dragleave','drop'].forEach(ev=>$('dropzone').addEventListener(ev,e=>{e.preventDefault();$('dropzone').classList.remove('drag')}));
+$('dropzone').addEventListener('drop',e=>loadFile(e.dataTransfer.files[0]));
+$('removeFile').addEventListener('click',()=>{currentFile=null;$('fileInput').value='';$('fileInfo').style.display='none';$('rawText').value='';$('pdfName').value='my-document';updatePreview('')});
+$('rawText').addEventListener('input',e=>{if(currentFile){currentFile=null;$('fileInfo').style.display='none'}updatePreview(e.target.value)});
+$('fontSize').addEventListener('input',e=>{$('fontValue').textContent=e.target.value+'px';$('document').style.fontSize=e.target.value+'px'});
+$('margin').addEventListener('input',e=>{$('marginValue').textContent=e.target.value+'mm'});
+function updatePaperLabel(){$('pageLabel').textContent=$('paperSize').selectedOptions[0].text+' · '+($('orientation').value==='portrait'?'세로':'가로')}
+$('paperSize').addEventListener('change',updatePaperLabel);$('orientation').addEventListener('change',updatePaperLabel);
+$('sampleBtn').addEventListener('click',()=>{const sample='# 마크다운 문서 예시\n\n## 1. 문서 소개\n\n이 문서는 **Markdown to PDF 변환기**의 사용 예시입니다. 마크다운으로 작성한 문서를 PDF 형식으로 간편하게 저장할 수 있습니다.\n\n## 2. 주요 기능\n\n- 파일 업로드 및 실시간 미리보기\n- A4, A5, Letter 용지 지원\n- 글자 크기 및 여백 조절\n- PDF 파일로 다운로드\n\n## 3. 안내 사항\n\n> 문서 변환은 사용자의 브라우저에서 처리됩니다.\n\n| 항목 | 설명 |\n| --- | --- |\n| 입력 형식 | `.md`, `.markdown` |\n| 출력 형식 | PDF |\n| 처리 방식 | 브라우저 내 변환 |\n\n## 4. 마무리\n\n원하는 문서를 업로드하고 PDF 다운로드 버튼을 눌러보세요.\n\n---\n\n*이 문서는 미리보기용 샘플입니다.*';currentFile=null;$('fileInfo').style.display='none';$('rawText').value=sample;$('pdfName').value='markdown-sample';updatePreview(sample);notify('예시 문서를 불러왔습니다.')});
+$('downloadBtn').addEventListener('click',async()=>{
+ if(!currentText.trim())return;
+ if(typeof html2pdf==='undefined'){notify('PDF 변환 모듈을 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.');return}
+ const btn=$('downloadBtn');btn.disabled=true;btn.textContent='PDF 생성 중…';
+ const el=$('document'),oldFont=el.style.fontSize,oldMargin=$('margin').value;
+ const size=$('paperSize').value,orient=$('orientation').value;
+ const options={margin:Number(oldMargin),filename:(($('pdfName').value.trim()||'document').replace(/[\\/:*?"<>|]/g,'-'))+'.pdf',image:{type:'jpeg',quality:.98},html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff',logging:false},jsPDF:{unit:'mm',format:size,orientation:orient},pagebreak:{mode:['css','legacy']}};
+ try{el.style.fontSize=$('fontSize').value+'px';await html2pdf().set(options).from(el).save();notify('PDF 다운로드가 완료되었습니다.')}
+ catch(err){console.error(err);notify('PDF 생성 중 오류가 발생했습니다. 다시 시도해 주세요.')}
+ finally{el.style.fontSize=oldFont;btn.disabled=false;btn.innerHTML='↓&nbsp; PDF 다운로드'}
+});
+</script>
+</body>
+</html>
