@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="정보통신공학 기반의 소프트웨어 QA 및 교육 운영 경험을 소개하는 서유빈 포트폴리오">
+<title>Portfolio | Information & Quality</title>
+<style>
+:root {
+  --site-primary: #173b36;
+  --site-on-primary: #ffffff;
+  --site-secondary: #dce9df;
+  --site-on-secondary: #173b36;
+  --site-background: #f5f7f3;
+  --site-on-background: #182722;
+  --site-font-body: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --site-font-heading: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  --surface: light-dark(#ffffff, #1c2723);
+  --surface-soft: light-dark(#edf2ec, #25332d);
+  --text: light-dark(#182722, #eef4ef);
+  --muted: light-dark(#68766e, #a9b7ae);
+  --line: light-dark(#dce4dc, #394840);
+  --accent: #b9d5c1;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--site-font-body); background: var(--site-background); color: var(--text); }
+.app { min-height: 100vh; width: 100%; background-color: var(--site-background); color: var(--site-on-background); border-radius: 0; overflow: hidden; }
+a { color: inherit; text-decoration: none; }
+button, a { -webkit-tap-highlight-color: transparent; }
+.wrap { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+header { height: 78px; display: flex; align-items: center; border-bottom: 1px solid var(--line); background: var(--site-background); }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.brand { display: flex; align-items: center; gap: 11px; font-size: 13px; font-weight: 800; letter-spacing: .11em; color: var(--text); }
+.brand-mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 11px; background: var(--site-primary); color: var(--site-on-primary); font-size: 13px; letter-spacing: 0; }
+.nav-right { display: flex; align-items: center; gap: 30px; }
+.nav-label { color: var(--muted); font-size: 11px; letter-spacing: .16em; font-weight: 700; }
+.page-links { display: flex; gap: 8px; }
+.page-links a { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); font-size: 12px; font-weight: 700; transition: .2s ease; }
+.page-links a:hover, .page-links a:focus-visible { background: var(--site-primary); border-color: var(--site-primary); color: var(--site-on-primary); transform: translateY(-2px); outline: none; }
+.hero { position: relative; padding: 100px 0 92px; background: var(--site-background); }
+.hero:after { content: ""; position: absolute; width: 420px; height: 420px; border-radius: 50%; background: var(--site-secondary); opacity: calc(.42 * var(--site-decoration-opacity)); right: -130px; top: -170px; pointer-events: none; }
+.hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.25fr .75fr; align-items: center; gap: 70px; }
+.eyebrow { display: flex; align-items: center; gap: 10px; color: #63816c; font-size: 11px; letter-spacing: .19em; font-weight: 800; text-transform: uppercase; }
+.eyebrow:before { content: ""; width: 26px; height: 1px; background: #83a78c; }
+h1 { font-family: var(--site-font-heading); font-size: clamp(38px, 5.2vw, 66px); line-height: 1.16; letter-spacing: -.055em; margin: 24px 0 22px; font-weight: 800; color: var(--text); }
+h1 span { color: #668b70; }
+.hero-copy { max-width: 600px; font-size: 15px; line-height: 1.95; color: var(--muted); word-break: keep-all; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 47px; padding: 0 20px; border-radius: 7px; font-size: 12px; font-weight: 750; transition: .2s ease; }
+.btn-primary { background: var(--site-primary); color: var(--site-on-primary); border: 1px solid var(--site-primary); }
+.btn-secondary { border: 1px solid var(--line); color: var(--text); background: var(--surface); }
+.btn:hover { transform: translateY(-3px); box-shadow: 0 9px 22px #173b361c; }
+.profile-card { background: var(--site-primary); color: var(--site-on-primary); border-radius: calc(18px * var(--site-radius-scale)); padding: 34px; min-height: 330px; position: relative; overflow: hidden; box-shadow: 0 22px 55px #173b3620; }
+.profile-card:after { content: ""; position: absolute; width: 220px; height: 220px; border: 1px solid #ffffff24; border-radius: 50%; right: -70px; bottom: -95px; box-shadow: 0 0 0 28px #ffffff09, 0 0 0 58px #ffffff07; }
+.card-kicker { font-size: 10px; letter-spacing: .2em; color: #b8d3c0; font-weight: 800; }
+.profile-symbol { margin: 34px 0 28px; width: 66px; height: 66px; border-radius: 20px; display: grid; place-items: center; background: #ffffff17; border: 1px solid #ffffff28; font-size: 25px; font-weight: 800; }
+.profile-card h2 { font-size: 22px; margin: 0 0 9px; letter-spacing: -.04em; }
+.profile-card p { margin: 0; color: #c6d8cc; font-size: 12px; line-height: 1.8; }
+.profile-bottom { position: absolute; z-index: 1; bottom: 27px; left: 34px; right: 34px; display: flex; justify-content: space-between; align-items: center; color: #b8d3c0; font-size: 10px; letter-spacing: .12em; }
+section { padding: 82px 0; }
+.section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 34px; }
+.section-index { color: #73927a; font-size: 11px; font-weight: 800; letter-spacing: .16em; }
+h2.section-title { margin: 10px 0 0; font-size: clamp(26px, 3vw, 36px); letter-spacing: -.05em; color: var(--text); }
+.section-desc { color: var(--muted); font-size: 12px; line-height: 1.8; max-width: 350px; text-align: right; }
+.about { background: var(--surface); }
+.about-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; }
+.about-lead { font-size: 21px; line-height: 1.65; letter-spacing: -.04em; font-weight: 750; color: var(--text); word-break: keep-all; }
+.about-lead span { color: #6e9678; }
+.about-text { color: var(--muted); font-size: 13px; line-height: 2; word-break: keep-all; }
+.keyword-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.keyword { padding: 8px 12px; border-radius: 5px; background: var(--surface-soft); color: var(--site-on-secondary); font-size: 11px; font-weight: 700; }
+.experience { background: var(--site-background); }
+.timeline { display: grid; grid-template-columns: 190px 1fr; border-top: 1px solid var(--line); padding: 28px 0; gap: 30px; }
+.timeline:last-child { border-bottom: 1px solid var(--line); }
+.time { color: var(--muted); font-size: 11px; letter-spacing: .04em; padding-top: 5px; }
+.role { font-size: 17px; font-weight: 800; letter-spacing: -.03em; color: var(--text); }
+.org { margin: 7px 0 13px; font-size: 12px; color: #729078; font-weight: 750; }
+.detail { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.9; word-break: keep-all; }
+.detail-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 13px; }
+.detail-list span { color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 5px 8px; font-size: 10px; }
+.info { background: var(--surface); }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.info-card { border: 1px solid var(--line); border-radius: calc(12px * var(--site-radius-scale)); padding: 25px; background: var(--surface); }
+.info-card h3 { margin: 0 0 21px; font-size: 14px; letter-spacing: -.02em; }
+.info-line { display: flex; justify-content: space-between; gap: 18px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 11px; }
+.info-line strong { color: var(--text); font-weight: 700; }
+.info-line span { color: var(--muted); text-align: right; }
+.skills { background: var(--site-background); }
+.skill-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.skill { background: var(--surface); border: 1px solid var(--line); border-radius: calc(10px * var(--site-radius-scale)); padding: 22px; transition: .2s ease; }
+.skill:hover { transform: translateY(-4px); border-color: #9bb9a1; }
+.skill-no { font-size: 10px; color: #73927a; font-weight: 800; letter-spacing: .12em; }
+.skill h3 { font-size: 14px; margin: 15px 0 8px; }
+.skill p { color: var(--muted); font-size: 11px; line-height: 1.8; margin: 0; }
+footer { padding: 34px 0; background: var(--site-primary); color: var(--site-on-primary); }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.footer-title { font-size: 14px; font-weight: 800; letter-spacing: .04em; }
+.footer-note { margin-top: 7px; color: #b8d3c0; font-size: 10px; }
+.footer-right { display: flex; align-items: center; gap: 18px; }
+.footer-right small { color: #b8d3c0; font-size: 10px; }
+.footer-right .page-links a { border-color: #ffffff42; color: #d8e7dc; }
+.footer-right .page-links a:hover { background: #ffffff; color: var(--site-primary); }
+@media (max-width: 760px) {
+  .wrap { width: min(100% - 36px, 560px); }
+  header { height: 68px; }
+  .nav-right { gap: 14px; }
+  .nav-label { display: none; }
+  .hero { padding: 70px 0 62px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 38px; }
+  .profile-card { min-height: 290px; }
+  section { padding: 62px 0; }
+  .section-head { display: block; }
+  .section-desc { text-align: left; margin-top: 14px; }
+  .about-grid { grid-template-columns: 1fr; gap: 20px; }
+  .timeline { grid-template-columns: 1fr; gap: 9px; padding: 23px 0; }
+  .info-grid { grid-template-columns: 1fr; }
+  .skill-grid { grid-template-columns: 1fr; }
+  .footer-inner { align-items: flex-start; flex-direction: column; }
+  .footer-right { width: 100%; justify-content: space-between; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *:before, *:after { transition-duration: .01ms !important; } }
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="맨 위로"><span class="brand-mark">P.</span><span>PERSONAL PORTFOLIO</span></a>
+    <div class="nav-right"><span class="nav-label">MORE PAGES</span><nav class="page-links" aria-label="추가 페이지"><a href="1.html" aria-label="1 페이지">1</a><a href="2.html" aria-label="2 페이지">2</a><a href="3.html" aria-label="3 페이지">3</a></nav></div>
+  </div>
+</header>
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">INFORMATION · QUALITY · GROWTH</div>
+      <h1>기술을 공부하고,<br><span>과정을 개선하는</span><br>실무형 인재입니다.</h1>
+      <p class="hero-copy">정보통신공학을 기반으로 소프트웨어 품질관리(QA)와 교육 운영을 경험했습니다. 꼼꼼한 검증과 원활한 협업을 바탕으로 업무의 완성도를 높이는 사람을 지향합니다.</p>
+      <div class="hero-actions"><a class="btn btn-primary" href="#experience">경력 살펴보기 <span>↗</span></a><a class="btn btn-secondary" href="#about">자기소개</a></div>
+    </div>
+    <aside class="profile-card" aria-label="프로필 요약">
+      <div class="card-kicker">PROFILE OVERVIEW</div>
+      <div class="profile-symbol">IT</div>
+      <h2>Information & Quality</h2>
+      <p>정보통신공학 학사<br>Software QA · Training Support</p>
+      <div class="profile-bottom"><span>DETAIL-ORIENTED</span><span>01 / 04</span></div>
+    </aside>
+  </div>
+</section>
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="section-head"><div><div class="section-index">01 / ABOUT ME</div><h2 class="section-title">저를 소개합니다</h2></div><p class="section-desc">기술적 이해를 바탕으로 정확하게 확인하고,<br>함께 일하는 사람들과 유연하게 소통합니다.</p></div>
+    <div class="about-grid">
+      <div class="about-lead">작은 오류도 놓치지 않는 꼼꼼함,<br><span>맡은 일을 끝까지 해내는 책임감.</span></div>
+      <div><p class="about-text">한국기술교육대학교에서 정보통신공학을 전공하며 IT 기술의 기초를 다졌습니다. 이후 셋톱박스 소프트웨어 QA 업무를 수행하며 테스트 케이스 작성, 기능 검증, 이슈 관리 및 결과 보고 등 품질관리의 전반적인 흐름을 경험했습니다.</p><p class="about-text">현재는 교육 현장에서 보조강사 업무를 수행하며 교육 준비와 운영 지원, 교육생 응대 등으로 경험의 폭을 넓히고 있습니다. 새로운 업무 환경에서도 빠르게 흐름을 파악하고, 정확하고 책임감 있게 업무를 수행하는 것을 중요하게 생각합니다.</p>
+      <div class="keyword-row"><span class="keyword">꼼꼼한 업무 처리</span><span class="keyword">문제 원인 파악</span><span class="keyword">협업 및 커뮤니케이션</span><span class="keyword">문서화 및 기록</span></div></div>
+    </div>
+  </div>
+</section>
+<section class="experience" id="experience">
+  <div class="wrap">
+    <div class="section-head"><div><div class="section-index">02 / EXPERIENCE</div><h2 class="section-title">주요 경력</h2></div><p class="section-desc">소프트웨어 품질 검증부터 교육 운영 지원까지<br>현장에서 쌓은 실무 경험입니다.</p></div>
+    <article class="timeline"><div class="time">2026. 05 — 2026. 12</div><div><div class="role">진로 및 직업훈련 역량강화 보조강사</div><div class="org">한국기술교육대학교 · 교육 운영 지원</div><p class="detail">직업훈련 교육과정의 원활한 운영을 위해 교육 준비 및 진행을 지원하고, 교육생의 실습 참여와 현장 운영을 보조합니다. 교육 환경 점검, 교육생 응대, 운영 관련 자료 작성 등 교육 현장 지원 업무를 수행합니다.</p><div class="detail-list"><span>교육 운영 지원</span><span>교육 환경 점검</span><span>교육생 응대</span><span>운영 문서 작성</span></div></div></article>
+    <article class="timeline"><div class="time">약 1년</div><div><div class="role">Software QA</div><div class="org">알티캐스트(Alticast) · QA 인턴 및 계약직</div><p class="detail">셋톱박스(STB) 소프트웨어의 기능 및 네트워크 동작을 검증하고, 테스트 케이스와 수행 결과를 관리했습니다. Jira를 활용해 이슈를 등록·추적하고 테스트 지표 및 결과 보고서를 작성했으며, 펌웨어와 릴리스 관련 검증 업무를 경험했습니다.</p><div class="detail-list"><span>테스트 케이스 및 결과 관리</span><span>Jira 이슈 관리</span><span>STB 기능 검증</span><span>네트워크 테스트</span><span>Linux 환경</span></div></div></article>
+    <article class="timeline"><div class="time">재학 중</div><div><div class="role">생활관 행정 및 운영 지원</div><div class="org">교내 근로장학생</div><p class="detail">생활관 입·퇴사 관련 행정 업무와 시설 및 생활 점검을 지원했습니다. 입주생 문의와 불편 사항을 응대하고 관련 내용을 기록·전달하며 원활한 생활관 운영을 도왔습니다.</p><div class="detail-list"><span>행정 업무</span><span>민원 응대</span><span>현장 점검</span><span>업무 기록</span></div></div></article>
+  </div>
+</section>
+<section class="info" id="education">
+  <div class="wrap">
+    <div class="section-head"><div><div class="section-index">03 / BACKGROUND</div><h2 class="section-title">학력 및 자격</h2></div><p class="section-desc">전공 지식과 직무 관련 자격을 바탕으로<br>실무 역량을 꾸준히 확장하고 있습니다.</p></div>
+    <div class="info-grid">
+      <div class="info-card"><h3>Education</h3><div class="info-line"><strong>한국기술교육대학교</strong><span>정보통신공학과 학사</span></div><div class="info-line"><strong>부전공</strong><span>HRD</span></div><div class="info-line"><strong>학업 성취도</strong><span>환산점수 91.60 / 100</span></div></div>
+      <div class="info-card"><h3>Certificates</h3><div class="info-line"><strong>정보처리산업기사</strong><span>취득</span></div><div class="info-line"><strong>SQLD · ADsP</strong><span>취득</span></div><div class="info-line"><strong>직업훈련교사 3급</strong><span>전자기기일반 · 정보기술개발 · 무선통신구축</span></div><div class="info-line"><strong>한국사능력검정시험</strong><span>3급</span></div></div>
+    </div>
+  </div>
+</section>
+<section class="skills" id="skills">
+  <div class="wrap">
+    <div class="section-head"><div><div class="section-index">04 / SKILLS</div><h2 class="section-title">업무 역량</h2></div><p class="section-desc">경험을 통해 익힌 도구와 업무 수행 역량을<br>분야별로 정리했습니다.</p></div>
+    <div class="skill-grid">
+      <article class="skill"><div class="skill-no">01 / QUALITY</div><h3>Software QA</h3><p>테스트 케이스 작성 및 수행, 기능·네트워크 검증, 결함 관리, 테스트 결과 정리 및 보고</p></article>
+      <article class="skill"><div class="skill-no">02 / TOOLS</div><h3>Technical Tools</h3><p>Jira, Linux, Wireshark, ADB 등 테스트 및 기술 지원 업무 관련 도구 활용 경험</p></article>
+      <article class="skill"><div class="skill-no">03 / OFFICE</div><h3>Office & Documentation</h3><p>Excel, PowerPoint, 한글 등을 활용한 자료 정리, 보고서 작성 및 행정 업무 지원</p></article>
+    </div>
+  </div>
+</section>
+</main>
+<footer><div class="wrap footer-inner"><div><div class="footer-title">THANK YOU FOR VISITING.</div><div class="footer-note">경험을 바탕으로 배우고 성장하며, 맡은 역할에 책임을 다하겠습니다.</div></div><div class="footer-right"><small>PORTFOLIO · 2026</small><nav class="page-links" aria-label="추가 페이지"><a href="1.html">1</a><a href="2.html">2</a><a href="3.html">3</a></nav></div></div></footer>
+</div>
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', event => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      event.preventDefault();
+      target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
